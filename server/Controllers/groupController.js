@@ -1,0 +1,10 @@
+const express = require("express");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const dotenv = require("dotenv");
+dotenv.config();
+const app = express();
+const { sendEmail } = require("../utility/functions");
+const User = require("../Models/user");
+const nodemailer = require("nodemailer");
+app.use(express.json());
