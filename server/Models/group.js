@@ -8,11 +8,11 @@ const groupSchema=new mongoose.Schema({
         type:mongoose.Schema.Types.ObjectId,
         ref:'User'
     }],
+    users:[{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'User'
+    }],
     tasks:[{
-        task:{
-            type:mongoose.Schema.Types.ObjectId,
-            ref:'Task'
-        },
         title:{
             type:String,
         },
@@ -21,7 +21,8 @@ const groupSchema=new mongoose.Schema({
         },
         status:{
             type:String,
-            enum:["incomplete","completed"]
+            enum:["incomplete","completed"],
+            default:"incomplete"
         },
         date:{
             type:String
@@ -33,6 +34,10 @@ const groupSchema=new mongoose.Schema({
             type:mongoose.Schema.Types.ObjectId,
             ref:'User'
         }],
+        lastUpdatedBy:{
+            type:mongoose.Schema.Types.ObjectId, 
+            ref:'User'
+        },
         createdBy:{
             type:mongoose.Schema.Types.ObjectId,
             ref:'User'

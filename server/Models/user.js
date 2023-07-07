@@ -27,6 +27,12 @@ const userSchema = new mongoose.Schema(
       otp: { type: Number },
       otpExpire: { type: Number },
       otp: { type: Number },
+      grps:[{
+        grpid:{
+          type:mongoose.Schema.Types.ObjectId,
+          ref:'Group'
+        }
+      }]
     },
     { timestamps: true }
   );
