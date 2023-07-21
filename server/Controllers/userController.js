@@ -7,6 +7,8 @@ const app = express();
 const { sendEmail } = require("../utility/functions");
 const User = require("../Models/user");
 const nodemailer = require("nodemailer");
+const Task = require("../Models/task");
+const Group = require("../Models/group");
 app.use(express.json());
 const auth = async (req, res) => {
   try {
@@ -70,7 +72,7 @@ const forgotPass = async (req, res) => {
     });
     await sendEmail({
       emailId: email,
-      subject: "OTP for your account at E-Commerce App",
+      subject: "OTP for your account at Task Manager App",
       message: `OTP to reset password is ${otp},  Otp valid for 5 mins`,
     });
     res.status(200).json({ message: "OTP sent on registered email" });

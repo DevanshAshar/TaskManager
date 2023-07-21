@@ -11,17 +11,43 @@ const taskSchema=new mongoose.Schema({
     },
     status:{
         type:String,
-        enum:["incomplete","completed"]
+        enum:["incomplete","completed","need review"]
     },
     date:{
-        type:String
+        type:Date
     },
     deadline:{
-        type:String
+        type:Date
     },
-    userId:{
+    userId:[{
         type:mongoose.Schema.Types.ObjectId,
         ref:'User'
+    }],
+    important:{
+        type:Boolean,
+        default:false
+    },
+    for:{
+        type:String,
+        enum:['personal','group']
+    },
+    markImp:[
+        {
+            type:mongoose.Schema.Types.ObjectId,
+            ref:'User'
+        }
+    ],
+    lastUpdatedBy:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'User'
+    },
+    createdBy:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'User'
+    },
+    deadlinePassed:{
+        type:Boolean,
+        default:false
     }
 },{timestamps:true})
 

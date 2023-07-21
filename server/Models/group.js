@@ -13,35 +13,8 @@ const groupSchema=new mongoose.Schema({
         ref:'User'
     }],
     tasks:[{
-        title:{
-            type:String,
-        },
-        description:{
-            type:String
-        },
-        status:{
-            type:String,
-            enum:["incomplete","completed"],
-            default:"incomplete"
-        },
-        date:{
-            type:String
-        },
-        deadline:{
-            type:String
-        },
-        taskFor:[{
-            type:mongoose.Schema.Types.ObjectId,
-            ref:'User'
-        }],
-        lastUpdatedBy:{
-            type:mongoose.Schema.Types.ObjectId, 
-            ref:'User'
-        },
-        createdBy:{
-            type:mongoose.Schema.Types.ObjectId,
-            ref:'User'
-        }
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'Task'
     }]
 },{timestamps:true})
 
