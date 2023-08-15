@@ -11,7 +11,9 @@ Full Stack Task Manager web application
 - Can mark task as incomplete,need review, completed
 - Can mark tasks important
 - Forgot password functionalities using nodemailer
-
+# Demo
+You can view a live demo of this project [here](https://taskit18.netlify.app/).
+<br/>Please Login/signup to view the whole site
 
 # Screenshots
 ![image](https://github.com/DevanshAshar/TaskManager/assets/113104126/2e4aefea-4492-4d2d-adeb-047fef3b7c6a)
