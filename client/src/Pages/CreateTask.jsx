@@ -82,12 +82,12 @@ const CreateTask = () => {
                     className="form-check-input"
                     type="radio"
                     name="flexRadioDefault"
-                    id="flexRadioDefault1"
-                    checked={status === "completed"}
-                    onChange={() => setStatus("completed")}
+                    id="flexRadioDefault2"
+                    checked={status === "need review"}
+                    onChange={() => setStatus("need review")}
                   />
-                  <label className="form-check-label" htmlFor="flexRadioDefault1">
-                    Completed
+                  <label className="form-check-label" htmlFor="flexRadioDefault2">
+                    Need Review
                   </label>
                 </div>
                 <div className="form-check">
@@ -95,12 +95,12 @@ const CreateTask = () => {
                     className="form-check-input"
                     type="radio"
                     name="flexRadioDefault"
-                    id="flexRadioDefault2"
-                    checked={status === "need review"}
-                    onChange={() => setStatus("need review")}
+                    id="flexRadioDefault1"
+                    checked={status === "completed"}
+                    onChange={() => setStatus("completed")}
                   />
-                  <label className="form-check-label" htmlFor="flexRadioDefault2">
-                    Need Review
+                  <label className="form-check-label" htmlFor="flexRadioDefault1">
+                    Completed
                   </label>
                 </div>
               </div>

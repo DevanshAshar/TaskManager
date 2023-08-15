@@ -8,45 +8,50 @@ import { useAuth } from "../Context/auth";
 
 const Groups = () => {
   const navigate = useNavigate();
-  const [auth,setAuth]=useAuth()
+  const [auth, setAuth] = useAuth();
   const [name, setName] = useState();
-  const [grpid,setGrpid]=useState();
+  const [grpid, setGrpid] = useState();
   const [id, setId] = useState();
-  const [grps,setGrps]=useState([])
+  const [grps, setGrps] = useState([]);
   const create = async () => {
     try {
-      const res = await axios.post(`${process.env.REACT_APP_API}/group/createGrp`, {
-        name,
-      });
+      const res = await axios.post(
+        `${process.env.REACT_APP_API}/group/createGrp`,
+        {
+          name,
+        }
+      );
       if (res.status === 200) toast.success("Group created");
     } catch (error) {
       console.log(error);
       toast.error("Something went wrong");
     }
   };
-  const join=async()=>{
+  const join = async () => {
     try {
-      const res=await axios.post(`${process.env.REACT_APP_API}/group/joinGrp`,{grpid})
-      if(res.status===200)
-      {
-      toast.success('Joined Group')
-      //navigate(`/grp/${res.data.grps._id}`)
+      const res = await axios.post(
+        `${process.env.REACT_APP_API}/group/joinGrp`,
+        { grpid }
+      );
+      if (res.status === 200) {
+        toast.success("Joined Group");
+        //navigate(`/grp/${res.data.grps._id}`)
       }
     } catch (error) {
       console.log(error);
       toast.error("Something went wrong");
     }
-  }
-  const getGrps=async()=>{
+  };
+  const getGrps = async () => {
     try {
-        const res=await axios.get(`${process.env.REACT_APP_API}/group/myGrps`)
-        console.log(res.data.grps)
-        setGrps(res.data.grps)
+      const res = await axios.get(`${process.env.REACT_APP_API}/group/myGrps`);
+      console.log(res.data.grps);
+      setGrps(res.data.grps);
     } catch (error) {
-        console.log(error);
+      console.log(error);
       toast.error("Something went wrong");
     }
-  }
+  };
   useEffect(() => {
     getGrps();
   }, []);
@@ -93,48 +98,41 @@ const Groups = () => {
                   </p>
                 </div>
               </div>
-              {/* <div className="card m-2" style={{ width: "18rem" }}>
-                <div className="card-body">
-                  <h3 className="card-title" style={{ textAlign: "center" }}>
-                    Join Group
-                  </h3>
-                  <input
-                    className="form-control"
-                    type="text"
-                    value={grpid}
-                    onChange={(e)=>setGrpid(e.target.value)}
-                    placeholder="Group id"
-                  />
-                  <p className="card-text">
-                    <div style={{ textAlign: "center", margin: "4px" }}>
-                      <button
-                        className="btn btn-primary"
-                        style={{ width: "16rem" }}
-                        onClick={() => {
-                          join()
-                        }}
+              {grps && grps.length > 0
+                ? grps.map((grp) =>
+                    grp && grp._id ? (
+                      <div
+                        key={grp._id}
+                        to={`/grp/${grp._id._id}`}
+                        style={{ textDecoration: "none", color: "black" }}
                       >
-                        Join
-                      </button>
-                    </div>
-                  </p>
-                </div>
-              </div> */}
-              {grps && grps.length>0 ? (grps.map((grp)=>(
-                    grp ? (
-                      <div key={grp._id} to={`/grp/${grp._id._id}`} style={{ textDecoration: "none", color: "black" }}>
-                        <div className={'card m-2'} style={{ width: "18rem" }} key={grp._id}>
+                        <div
+                          className={"card m-2"}
+                          style={{ width: "18rem" }}
+                          key={grp._id}
+                        >
                           <div className="card-body">
                             <h5 className="card-title">{grp._id.name}</h5>
                             <p>tasks pending</p>
                             <p>tasks pending for review</p>
-                            <button className="btn btn-primary" onClick={() => navigate(`/grp/${grp._id._id}`)}>View</button>
-                            <button className="btn btn-primary m-2" style={{ backgroundColor: 'green' }}>Add TASK</button>
+                            <button
+                              className="btn btn-primary"
+                              onClick={() => navigate(`/grp/${grp._id._id}`)}
+                            >
+                              View
+                            </button>
+                            <button
+                              className="btn btn-primary m-2"
+                              style={{ backgroundColor: "green" }}
+                            >
+                              Add TASK
+                            </button>
                           </div>
                         </div>
                       </div>
                     ) : null
-                ))):null}
+                  )
+                : null}
             </div>
           </div>
         </div>

@@ -135,22 +135,6 @@ const CreateGrpTask = () => {
                     className="form-check-input"
                     type="radio"
                     name="flexRadioDefault"
-                    id="flexRadioDefault1"
-                    checked={status === "completed"}
-                    onChange={() => setStatus("completed")}
-                  />
-                  <label
-                    className="form-check-label"
-                    htmlFor="flexRadioDefault1"
-                  >
-                    Completed
-                  </label>
-                </div>
-                <div className="form-check">
-                  <input
-                    className="form-check-input"
-                    type="radio"
-                    name="flexRadioDefault"
                     id="flexRadioDefault2"
                     checked={status === "need review"}
                     onChange={() => setStatus("need review")}
@@ -160,6 +144,22 @@ const CreateGrpTask = () => {
                     htmlFor="flexRadioDefault2"
                   >
                     Need Review
+                  </label>
+                </div>
+                <div className="form-check">
+                  <input
+                    className="form-check-input"
+                    type="radio"
+                    name="flexRadioDefault"
+                    id="flexRadioDefault1"
+                    checked={status === "completed"}
+                    onChange={() => setStatus("completed")}
+                  />
+                  <label
+                    className="form-check-label"
+                    htmlFor="flexRadioDefault1"
+                  >
+                    Completed
                   </label>
                 </div>
               </div>
