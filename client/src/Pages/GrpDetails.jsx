@@ -32,10 +32,9 @@ const GrpDetails = () => {
     }
   };
   const handleCopy = () => {
-    navigator.clipboard.writeText(`http://localhost:3000/joinGrp/${params.grpId}`)
+    navigator.clipboard.writeText(`${process.env.REACT_APP_FE}/joinGrp/${params.grpId}`)
       .then(() => {
         toast.success('Invite Link Copied')
-        console.log('Copied to clipboard:', `http://localhost:3000/joinGrp/${params.grpId}`);
       })
       .catch((error) => {
         console.error('Error copying to clipboard:', error);
