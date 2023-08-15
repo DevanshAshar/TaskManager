@@ -15,6 +15,14 @@ Full Stack Task Manager web application
 You can view a live demo of this project [here](https://taskit18.netlify.app/).
 <br/>Please Login/signup to view the whole site
 
+## Technologies Used 
+  
+ - MongoDB 
+ - ExpressJS 
+ - React JS 
+ - Node JS 
+ - Bootstrap
+
 # Screenshots
 ![image](https://github.com/DevanshAshar/TaskManager/assets/113104126/2e4aefea-4492-4d2d-adeb-047fef3b7c6a)
 ![image](https://github.com/DevanshAshar/TaskManager/assets/113104126/f38137a2-10f6-454c-b176-536f8eea702b)
