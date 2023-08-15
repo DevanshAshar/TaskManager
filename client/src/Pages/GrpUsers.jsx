@@ -5,11 +5,8 @@ import Layout from "../Components/Layouts/Layout";
 import { toast } from "react-hot-toast";
 import GrpMenu from "../Components/Layouts/GrpMenu";
 import { useAuth } from "../Context/auth";
-
-const GrpDetails = () => {
+const GrpUsers = () => {
   const [grp, setGrp] = useState({});
-  const [incomplete,setIncomplete]=useState()
-  const [needrev,setNeedrev]=useState()
   const [users, setUsers] = useState([]);
   const params = useParams();
   const [auth, setAuth] = useAuth();
@@ -23,23 +20,12 @@ const GrpDetails = () => {
         { grpId: params.grpId }
       );
       setUsers(res.data.userNames);
-      setGrp(res.data.group)
-      setIncomplete(res.data.incompleteTasksCount)
-      setNeedrev(res.data.needRevTasksCount)
+      console.log(users);
+      setGrp(res.data.group);
     } catch (error) {
       console.log(error);
       toast.error("Something went wrong");
     }
-  };
-  const handleCopy = () => {
-    navigator.clipboard.writeText(`http://localhost:3000/joinGrp/${params.grpId}`)
-      .then(() => {
-        toast.success('Invite Link Copied')
-        console.log('Copied to clipboard:', `http://localhost:3000/joinGrp/${params.grpId}`);
-      })
-      .catch((error) => {
-        console.error('Error copying to clipboard:', error);
-      });
   };
   useEffect(() => {
     grpDet();
@@ -52,14 +38,13 @@ const GrpDetails = () => {
             <GrpMenu />
           </div>
           <div className="col-md-9">
-            <h2>Group Info</h2>
-            <div className="card w-75 p-3">
-              <h3>{grp.name}</h3>
-              <h4>Incomplete Tasks:{incomplete}</h4>
-              <h4>Review Left :{needrev}</h4>
-              {/* <h4>Invite Code:{grp._id}</h4> */}
-              <button className="btn btn-primary" onClick={handleCopy}>Copy Invite Link To Clipboard</button>
-            </div>
+            <h2>Users</h2>
+            
+              {users?.map((user) => (
+                <div className="card w-75 p-3 m-2">
+                <h4 key={user}>{user}</h4>
+                </div>
+              ))}            
           </div>
         </div>
       </div>
@@ -67,4 +52,4 @@ const GrpDetails = () => {
   );
 };
 
-export default GrpDetails;
+export default GrpUsers;

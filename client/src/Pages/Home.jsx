@@ -8,11 +8,13 @@ const Home = () => {
   const [auth, setAuth] = useAuth();
   const [count,setCount]=useState();
   const [revcount,setRevcount]=useState();
+  const [otherRev,setOtherRev]=useState()
   const getCount=async()=>{
     try {
       const res=await axios.get(`${process.env.REACT_APP_API}/task/getCount`)
       setCount(res.data.ct)
       setRevcount(res.data.revCt)
+      setOtherRev(res.data.otherRev)
     } catch (error) {
       console.log(error)
       toast.error('Something went wrong')
@@ -47,7 +49,8 @@ const Home = () => {
                 </h2>
                 <h5 style={{ color: "blue" }}>{count>0?(`You Have ${count} Upcoming Tasks Pending`):null}</h5>
                 <h5 style={{ color: "blue" }}>{revcount>0?(`You Have ${revcount} Upcoming Tasks Pending for Review`):null}</h5>
-                <h5 style={{ color: "blue" }}>{count===0 && revcount===0?(`Yayy!! You have no tasks pending`):null}</h5>
+                <h5 style={{ color: "blue" }}>{otherRev>0?(`You Have ${otherRev} other tasks to check once`):null}</h5>
+                <h5 style={{ color: "blue" }}>{count===0 && revcount===0 && otherRev===0?(`Yayy!! You have no tasks pending`):null}</h5>
                 <Link to="/dashboard" class="card-link">
                   Tasks
                 </Link>

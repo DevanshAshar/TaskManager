@@ -1,67 +1,76 @@
 import React, { useEffect, useState } from "react";
 import Layout from "../Components/Layouts/Layout";
-import UserMenu from "../Components/Layouts/UserMenu";
+import GrpMenu from "../Components/Layouts/GrpMenu";
+import { useLocation, useParams } from "react-router-dom";
+import { Checkbox, Radio } from "antd";
+import { useAuth } from "../Context/auth";
+import axios from "axios";
 import { toast } from "react-hot-toast";
 import DatePicker from "react-datepicker";
-import axios from "axios";
-import { useNavigate, useParams } from "react-router-dom";
-import { useAuth } from "../Context/auth";
-
-const ParticularTask = () => {
+import "react-datepicker/dist/react-datepicker.css";
+const CreateGrpTask = () => {
+  const location = useLocation();
   const [title, setTitle] = useState();
-  const [auth, setAuth] = useAuth();
+  const [grp, setGrp] = useState({});
+  var [users, setUsers] = useState({});
+  var [rev,setRev]=useState([])
+  const [check, setCheck] = useState([]);
   const [description, setDescription] = useState();
   const [deadline, setDeadline] = useState(null);
-  const [date, setDate] = useState();
-  const [status, setStatus] = useState();
-  const [imp, setImp] = useState();
+  const [status, setStatus] = useState("incomplete");
+  const [imp, setImp] = useState(false);
+  const [auth, setAuth] = useAuth();
   const params = useParams();
-  const navigate=useNavigate()
-  const getTask = async () => {
+  const grpDet = async () => {
     try {
+      console.log(check)
       const res = await axios.post(
-        `${process.env.REACT_APP_API}/task/particularTask`,
-        { tid: params.tid }
+        `${process.env.REACT_APP_API}/group/particularGrp`,
+        { grpId: params.grpId }
       );
-      const task = res.data.task;
-      setTitle(task.title);
-      setDescription(task.description);
-      setDeadline(new Date(task.deadline));
-      setDate((new Date(task.date)).toLocaleDateString());
-      setStatus(task.status);
-      setImp(task.important);
+      setUsers(res.data.group.users);
+      setGrp(res.data.group);
     } catch (error) {
-      console.log(error);
+      console.log(error.message);
       toast.error("Something went wrong");
     }
   };
-  const upd=async()=>{
+  const handleFilter = (value, category) => {
+    let chk = [...check];
+    chk.push(category);
+    setCheck(chk);
+  };
+  const review = (value, category) => {
+    let chk = [...rev];
+    chk.push(category);
+    setRev(chk);
+  };
+  const subm = async () => {
     try {
-        const tid=params.tid
-        const res=await axios.patch(`${process.env.REACT_APP_API}/task/updateTask`,{tid,title,description,deadline,status,important:imp})
-        if(res.status===200)
-        toast.success('Task Updated')
+      const res = await axios.post(
+        `${process.env.REACT_APP_API}/group/addGrpTask/${params.grpId}`,
+        {
+          title,
+          description,
+          deadline,
+          status,
+          important: imp,
+          userId:check,
+          markImp:rev,
+          grpId:params.grpId
+        }
+      );
+      if (res.status === 200) toast.success("Task Created");
+        console.log(check)
+      setCheck([])
+      setRev([])
     } catch (error) {
-        console.log(error);
+      console.log(error.message);
       toast.error("Something went wrong");
     }
-  }
-  const del=async()=>{
-    try {
-        const tid=params.tid
-        const res=await axios.delete(`${process.env.REACT_APP_API}/task/deleteTask`,{ data: { tid: tid } })
-        if(res.status===200)
-        {
-            toast.success('Task deleted')
-            navigate('/myTasks')
-        }
-    } catch (error) {
-        console.log(error);
-        toast.error("Something went wrong"); 
-    }
-  }
+  };
   useEffect(() => {
-    getTask();
+    grpDet();
   }, []);
   useEffect(() => {
     localStorage.setItem("auth", JSON.stringify(auth));
@@ -71,11 +80,12 @@ const ParticularTask = () => {
       <div className="container-fluid m-3 p-3">
         <div className="row">
           <div className="col-md-2">
-            <UserMenu />
+            <GrpMenu />
           </div>
           <div className="col-md-9">
-            <h2 style={{ color: "blue" }}>Task Details</h2>
+            <h2 style={{ color: "blue" }}>Create Group Task</h2>
             <div className="m-1 w-75">
+              <div>{location.state}</div>
               <div className="mb-3">
                 <input
                   type="text"
@@ -167,10 +177,37 @@ const ParticularTask = () => {
                   </label>
                 </div>
               </div>
-              <div className="mb-3">
-                <button className="btn btn-primary" onClick={()=>upd()}>Update</button>
-                <button className="btn btn-danger m-2" onClick={()=>del()}>Delete</button>
+              <div>Mark For</div>
+              <div className="form-check">
+                {users && users.length>0
+                  ? users.map((user) => (
+                      <Checkbox
+                        key={user._id}
+                        onChange={(e) => handleFilter(e.target.checked, user._id)}
+                      >
+                        {user.username}
+                      </Checkbox>
+                    ))
+                  : null}
               </div>
+
+              <div>Review By</div>
+              <div className="form-check">
+                {users && users.length>0
+                  ? users.map((user) => (
+                      <Checkbox
+                        key={user._id}
+                        onChange={(e) => review(e.target.checked, user._id)}
+                      >
+                        {user.username}
+                      </Checkbox>
+                    ))
+                  : null}
+              </div>
+
+              <button className="btn btn-primary" onClick={() => subm()}>
+                Create
+              </button>
             </div>
           </div>
         </div>
@@ -179,4 +216,4 @@ const ParticularTask = () => {
   );
 };
 
-export default ParticularTask;
+export default CreateGrpTask;

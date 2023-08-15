@@ -38,7 +38,7 @@ const Landing = () => {
           token: res.data.token,
         });
         localStorage.setItem("auth", JSON.stringify(res.data.token));
-        navigate("/dashboard");
+        navigate(location.state || "/dashboard");
       }
     } catch (error) {
       console.log(error);

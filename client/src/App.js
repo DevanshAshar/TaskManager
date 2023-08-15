@@ -12,6 +12,15 @@ import History from "./Pages/History";
 import ParticularTask from "./Pages/ParticularTask";
 import Groups from "./Pages/Groups";
 import GrpDetails from "./Pages/GrpDetails";
+import Important from "./Pages/Important";
+import Profile from "./Pages/Profile";
+import GrpUsers from "./Pages/GrpUsers";
+import GrpTasks from "./Pages/GrpTasks";
+import CreateGrpTask from "./Pages/CreateGrpTask";
+import ParticularGrpTask from "./Pages/ParticularGrpTask";
+import GrpImportant from "./Pages/GrpImportant";
+import GrpHistory from "./Pages/GrpHistory";
+import JoinGrp from "./Pages/JoinGrp";
 function App() {
   return (
     <>
@@ -25,6 +34,15 @@ function App() {
           <Route exact path="/createTask" element={<CreateTask/>}/>
           <Route exact path="/groups" element={<Groups/>}/>
           <Route exact path="/grp/:grpId" element={<GrpDetails/>}/>
+          <Route exact path="/grpUsers/:grpId" element={<GrpUsers/>}/>
+          <Route exact path="/grpTasks/:grpId" element={<GrpTasks/>}/>
+          <Route exact path="/grpTask/:tid" element={<ParticularGrpTask/>}/>
+          <Route exact path="/createGrpTask/:grpId" element={<CreateGrpTask/>}/>
+          <Route exact path="/profile" element={<Profile/>}/>
+          <Route exact path="/important" element={<Important/>}/>
+          <Route exact path="/grpImportant/:grpId" element={<GrpImportant/>}/>
+          <Route exact path="/joinGrp/:grpId" element={<JoinGrp/>}/>
+          <Route exact path="/grpHistory/:grpId" element={<GrpHistory/>}/>
           <Route exact path="/history" element={<History/>}/>
         </Route>        
         <Route path="/signup" element={<Signup />} />

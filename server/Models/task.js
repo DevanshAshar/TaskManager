@@ -23,6 +23,10 @@ const taskSchema=new mongoose.Schema({
         type:mongoose.Schema.Types.ObjectId,
         ref:'User'
     }],
+    grpId:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'Group'
+    },
     important:{
         type:Boolean,
         default:false

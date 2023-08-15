@@ -10,7 +10,7 @@ const Groups = () => {
   const navigate = useNavigate();
   const [auth,setAuth]=useAuth()
   const [name, setName] = useState();
-  const [grpId,setGrpId]=useState();
+  const [grpid,setGrpid]=useState();
   const [id, setId] = useState();
   const [grps,setGrps]=useState([])
   const create = async () => {
@@ -26,11 +26,11 @@ const Groups = () => {
   };
   const join=async()=>{
     try {
-      const res=await axios.post(`${process.env.REACT_APP_API}/group/joinGrp`,{grpId})
+      const res=await axios.post(`${process.env.REACT_APP_API}/group/joinGrp`,{grpid})
       if(res.status===200)
       {
       toast.success('Joined Group')
-      navigate(`/grp/${res.data.grps._id}`)
+      //navigate(`/grp/${res.data.grps._id}`)
       }
     } catch (error) {
       console.log(error);
@@ -40,6 +40,7 @@ const Groups = () => {
   const getGrps=async()=>{
     try {
         const res=await axios.get(`${process.env.REACT_APP_API}/group/myGrps`)
+        console.log(res.data.grps)
         setGrps(res.data.grps)
     } catch (error) {
         console.log(error);
@@ -92,7 +93,7 @@ const Groups = () => {
                   </p>
                 </div>
               </div>
-              <div className="card m-2" style={{ width: "18rem" }}>
+              {/* <div className="card m-2" style={{ width: "18rem" }}>
                 <div className="card-body">
                   <h3 className="card-title" style={{ textAlign: "center" }}>
                     Join Group
@@ -100,6 +101,8 @@ const Groups = () => {
                   <input
                     className="form-control"
                     type="text"
+                    value={grpid}
+                    onChange={(e)=>setGrpid(e.target.value)}
                     placeholder="Group id"
                   />
                   <p className="card-text">
@@ -108,7 +111,7 @@ const Groups = () => {
                         className="btn btn-primary"
                         style={{ width: "16rem" }}
                         onClick={() => {
-                          navigate("/joinGroup");
+                          join()
                         }}
                       >
                         Join
@@ -116,26 +119,22 @@ const Groups = () => {
                     </div>
                   </p>
                 </div>
-              </div>
-              {grps && grps?.map((grp)=>(
-                    <div key={grp._id} to={`/grp/${grp._id._id}`} style={{ textDecoration: "none", color: "black" }}>
-                        <div
-                    className={'card m-2'}
-                    style={{ width: "18rem" }}
-                    key={grp._id}
-                  >
-                    <div className="card-body">
-                      <h5 className="card-title">{grp._id.name}</h5>
-                      <p>tasks pending</p>
-                      <p>tasks pending for review</p>
-                      <button className="btn btn-primary" onClick={()=>{
-                        navigate(`/grp/${grp._id._id}`)
-                      }}>View</button>
-                      <button className="btn btn-primary m-2" style={{backgroundColor:'green'}}>Add TASK</button>
-                      </div>                      
+              </div> */}
+              {grps && grps.length>0 ? (grps.map((grp)=>(
+                    grp ? (
+                      <div key={grp._id} to={`/grp/${grp._id._id}`} style={{ textDecoration: "none", color: "black" }}>
+                        <div className={'card m-2'} style={{ width: "18rem" }} key={grp._id}>
+                          <div className="card-body">
+                            <h5 className="card-title">{grp._id.name}</h5>
+                            <p>tasks pending</p>
+                            <p>tasks pending for review</p>
+                            <button className="btn btn-primary" onClick={() => navigate(`/grp/${grp._id._id}`)}>View</button>
+                            <button className="btn btn-primary m-2" style={{ backgroundColor: 'green' }}>Add TASK</button>
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                ))}
+                    ) : null
+                ))):null}
             </div>
           </div>
         </div>

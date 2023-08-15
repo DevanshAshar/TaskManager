@@ -1,20 +1,22 @@
 import React, { useEffect, useState } from "react";
 import Layout from "../Components/Layouts/Layout";
 import UserMenu from "../Components/Layouts/UserMenu";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import axios from "axios";
 import { format } from 'date-fns';
 import moment from 'moment';
 import { useAuth } from "../Context/auth";
 import { Link } from "react-router-dom";
-const History = () => {
+import GrpMenu from "../Components/Layouts/GrpMenu";
+const GrpHistory = () => {
     const [auth, setAuth] = useAuth();
     const navigate = useNavigate();
     const [tasks, setTasks] = useState([]);
+    const params=useParams()
     const getTasks = async () => {
       try {
-        const res = await axios.get(`${process.env.REACT_APP_API}/task/history`);
+        const res = await axios.get(`${process.env.REACT_APP_API}/group/history/${params.grpId}`);
         setTasks(res.data.task);
       } catch (error) {
         console.log(error.message);
@@ -44,7 +46,7 @@ const History = () => {
         <div className="container-fluid m-3 p-3">
           <div className="row">
             <div className="col-md-2">
-              <UserMenu />
+              <GrpMenu />
             </div>
             <div className="col-md-9">
               <h2>Past Tasks</h2>
@@ -52,7 +54,7 @@ const History = () => {
                 {tasks?(tasks?.map((t) => (
                   <Link
                     key={t._id}
-                    to={`/task/${t._id}`}
+                    to={`/grptask/${t._id}`}
                     style={{ textDecoration: "none", color: "black" }}
                   >
                     <div
@@ -86,5 +88,5 @@ const History = () => {
     );
   };
   
-  export default History;
+  export default GrpHistory;
   
